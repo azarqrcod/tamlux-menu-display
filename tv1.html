@@ -2,31 +2,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TV1 Menu</title>
+<title>TamLux TV1</title>
 
 <style>
+
 html,body{
 margin:0;
 padding:0;
-background:black;
-overflow:hidden;
 width:100%;
 height:100%;
+overflow:hidden;
+background:black;
 }
 
-#slide{
-width:100vw;
-height:100vh;
-object-fit:contain;
+.slide{
 position:absolute;
-transition:opacity 1s ease;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transform:scale(1.03);
+transition:
+opacity 2s ease-in-out,
+transform 10s linear;
+will-change:opacity,transform;
 }
+
+.active{
+opacity:1;
+transform:scale(1);
+z-index:2;
+}
+
 </style>
 </head>
 
 <body>
 
-<img id="slide" src="images/menu1.png">
+<img id="slideA" class="slide active">
+<img id="slideB" class="slide">
 
 <script>
 
@@ -39,25 +53,36 @@ const images = [
 "images/menu6.png"
 ];
 
-let index = 0;
+let current = 0;
 
-const slide = document.getElementById("slide");
+const slideA = document.getElementById("slideA");
+const slideB = document.getElementById("slideB");
 
-setInterval(()=>{
+slideA.src = images[current];
 
-slide.style.opacity = 0;
+let activeSlide = slideA;
+let nextSlide = slideB;
+
+function changeSlide(){
+
+current = (current + 1) % images.length;
+
+nextSlide.src = images[current];
+
+nextSlide.classList.add("active");
+activeSlide.classList.remove("active");
 
 setTimeout(()=>{
 
-index = (index + 1) % images.length;
+let temp = activeSlide;
+activeSlide = nextSlide;
+nextSlide = temp;
 
-slide.src = images[index];
+},2000);
 
-slide.style.opacity = 1;
+}
 
-},1000);
-
-},10000);
+setInterval(changeSlide,10000);
 
 </script>
 
