@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TV2 Menu</title>
+
+<style>
+html,body{
+margin:0;
+padding:0;
+background:black;
+overflow:hidden;
+width:100%;
+height:100%;
+}
+
+#slide{
+width:100vw;
+height:100vh;
+object-fit:contain;
+position:absolute;
+transition:opacity 1s ease;
+}
+</style>
+</head>
+
+<body>
+
+<img id="slide" src="images/menu6.png">
+
+<script>
+
+const images = [
+"images/menu1.png",
+"images/menu2.png",
+"images/menu3.png",
+"images/menu4.png",
+"images/menu5.png",
+"images/menu6.png"
+];
+
+let index = 5;
+
+const slide = document.getElementById("slide");
+
+setInterval(()=>{
+
+slide.style.opacity = 0;
+
+setTimeout(()=>{
+
+index = (index + 1) % images.length;
+
+slide.src = images[index];
+
+slide.style.opacity = 1;
+
+},1000);
+
+},10000);
+
+</script>
+
+</body>
+</html>
